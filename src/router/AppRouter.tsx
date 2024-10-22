@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import PrivateRouter from "./PrivateRouter";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Firms from "../pages/Firms";
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const AppRouter: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRouter />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/firms" element={<Firms />} />
         </Route>
       </Routes>
       {!hideNavbarAndFooter && <Footer />}

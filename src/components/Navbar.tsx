@@ -12,12 +12,22 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import useApiRequests from "../services/useApiRequests";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Home", "Purchases", "Sales", "Firms", "Brands", "Products"];
+const pages = [
+  { name: "Home", path: "/home" },
+  { name: "Purchases", path: "/purchases" },
+  { name: "Sales", path: "/sales" },
+  { name: "Firms", path: "/firms" },
+  { name: "Brands", path: "/brands" },
+  { name: "Products", path: "/products" },
+];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
   const { logout } = useApiRequests();
+  const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -76,19 +86,28 @@ function Navbar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+              {pages.map(({ name, path }) => (
+                <MenuItem
+                  key={name}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate(path); // Tıkladığınızda uygun yola yönlendirin
+                  }}
+                >
+                  <Typography sx={{ textAlign: "center" }}>{name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages.map(({ name, path }) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={name}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigate(path); // Tıkladığınızda uygun yola yönlendirin
+                }}
                 sx={{
                   my: 2,
                   color: "white",
@@ -96,7 +115,7 @@ function Navbar() {
                   "&:hover": { backgroundColor: "#2196f3" },
                 }}
               >
-                {page}
+                {name}
               </Button>
             ))}
           </Box>
