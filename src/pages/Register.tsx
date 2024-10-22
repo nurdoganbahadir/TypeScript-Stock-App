@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useApiRequests from "../services/useApiRequests";
 
 const registerSchema = object({
   username: string()
@@ -37,6 +38,8 @@ const registerSchema = object({
 });
 
 const Register: React.FC = () => {
+  const { register } = useApiRequests();
+
   return (
     <Container maxWidth="lg">
       <Grid
@@ -83,6 +86,7 @@ const Register: React.FC = () => {
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
+              register(values);
               actions.resetForm();
               actions.setSubmitting(false);
             }}

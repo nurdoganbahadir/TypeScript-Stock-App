@@ -1,13 +1,23 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../features/authSlice";
+import { loginSuccess, registerSuccess } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 interface LoginData {
   email: string;
   password: string;
 }
+
+interface RegisterData {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 type LoginFn = (user: LoginData) => Promise<void>;
+type RegisterFn = (user: RegisterData) => Promise<void>;
 
 const useApiRequests = () => {
   const dispatch = useDispatch();
@@ -26,7 +36,20 @@ const useApiRequests = () => {
     }
   };
 
-  return { login };
+  const register: RegisterFn = async (user) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/users/`,
+        user
+      );
+      dispatch(registerSuccess(data));
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { login, register };
 };
 
 export default useApiRequests;
