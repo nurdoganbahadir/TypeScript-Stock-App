@@ -8,8 +8,11 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
+import useApiRequests from "../services/useApiRequests";
 
 const Login: React.FC = () => {
+  const { login } = useApiRequests();
+
   const loginSchema = object({
     password: string()
       .required("Şifre zorunludur.")
@@ -64,6 +67,8 @@ const Login: React.FC = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
+              console.log(values);
+              login(values);
               actions.resetForm();
               actions.setSubmitting(false);
             }}
