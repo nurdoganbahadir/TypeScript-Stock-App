@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
 
-const Login = () => {
+const Login: React.FC = () => {
   const loginSchema = object({
     password: string()
       .required("Şifre zorunludur.")
