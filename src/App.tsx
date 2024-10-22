@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import store, { persistor } from "./app/store";
 import AppRouter from "./router/AppRouter";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
           <AppRouter />
         </Router>
       </PersistGate>
+      <ToastContainer />
     </Provider>
   );
 };
