@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "../features/authSlice";
+import stockReducer from "../features/stockSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,7 +21,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
 const store = configureStore({
-  reducer: { auth: persistedReducer },
+  reducer: { auth: persistedReducer, stock: stockReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
