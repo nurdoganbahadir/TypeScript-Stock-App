@@ -1,7 +1,12 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { loginSuccess, registerSuccess } from "../features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginSuccess,
+  logoutSuccess,
+  registerSuccess,
+} from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../app/store";
 
 interface LoginData {
   email: string;
@@ -22,6 +27,7 @@ type RegisterFn = (user: RegisterData) => Promise<void>;
 const useApiRequests = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const login: LoginFn = async (user) => {
     try {
@@ -49,7 +55,20 @@ const useApiRequests = () => {
     }
   };
 
-  return { login, register };
+  const logout = async () => {
+    try {
+      const { data } = await axios(
+        `${process.env.REACT_APP_BASE_URL}/auth/logout/`,
+        { headers: { Authorization: `Token ${token}` } }
+      );
+      dispatch(logoutSuccess(data));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { login, register, logout };
 };
 
 export default useApiRequests;

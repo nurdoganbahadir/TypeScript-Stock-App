@@ -11,11 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import useApiRequests from "../services/useApiRequests";
 
 const pages = ["Home", "Purchases", "Sales", "Firms", "Brands", "Products"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
+  const { logout } = useApiRequests();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -36,6 +39,10 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -82,7 +89,12 @@ function Navbar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  "&:hover": { backgroundColor: "#2196f3" },
+                }}
               >
                 {page}
               </Button>
@@ -111,7 +123,17 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={
+                    setting === "Logout"
+                      ? () => {
+                          handleCloseUserMenu();
+                          handleLogout();
+                        }
+                      : handleCloseUserMenu
+                  }
+                >
                   <Typography sx={{ textAlign: "center" }}>
                     {setting}
                   </Typography>
