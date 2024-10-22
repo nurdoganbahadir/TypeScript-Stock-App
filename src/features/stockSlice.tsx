@@ -16,18 +16,28 @@ const initialState: StockState = {
   firms: [{}],
   products: [],
   brands: [],
+  loading: false,
+  error: false,
 };
 
 const stockSlice = createSlice({
   name: "stock",
   initialState,
   reducers: {
+    fetchStart: (state) => {
+      state.loading = true;
+      state.error = false;
+    },
     getStockSuccess: (state, action: PayloadAction<GetStockSuccessPayload>) => {
       const { path, data } = action.payload;
       state[path] = data; // Dinamik olarak path kullanarak durumu güncelle
     },
+    fetchFail: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
   },
 });
 
-export const { getStockSuccess } = stockSlice.actions;
+export const { getStockSuccess, fetchStart, fetchFail } = stockSlice.actions;
 export default stockSlice.reducer;

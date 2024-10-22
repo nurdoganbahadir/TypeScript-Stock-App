@@ -5,7 +5,9 @@ import { RootState } from "../app/store";
 
 const Firms = () => {
   const { getStock } = useStockRequests();
-  const { firms } = useSelector((state: RootState) => state.stock);
+  const { firms, loading, error } = useSelector(
+    (state: RootState) => state.stock
+  );
   console.log(firms);
 
   useEffect(() => {
