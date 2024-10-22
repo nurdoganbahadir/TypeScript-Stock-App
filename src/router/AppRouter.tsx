@@ -1,13 +1,20 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Home from "../pages/Home";
 import PrivateRouter from "./PrivateRouter";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const AppRouter: React.FC = () => {
+  const location = useLocation();
+  const hideNavbarAndFooter =
+    location.pathname === "/" || location.pathname === "/register";
+
   return (
-    <Router>
+    <>
+      {!hideNavbarAndFooter && <Navbar />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -15,7 +22,8 @@ const AppRouter: React.FC = () => {
           <Route path="/home" element={<Home />} />
         </Route>
       </Routes>
-    </Router>
+      {!hideNavbarAndFooter && <Footer />}
+    </>
   );
 };
 
