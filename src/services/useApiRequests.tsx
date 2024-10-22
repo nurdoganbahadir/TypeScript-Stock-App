@@ -7,6 +7,7 @@ import {
 } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../app/store";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 interface LoginData {
   email: string;
@@ -37,8 +38,12 @@ const useApiRequests = () => {
       );
       dispatch(loginSuccess(data));
       navigate("/home");
+      toastSuccessNotify("Login işlemi başarılı.");
     } catch (error) {
       console.log(error);
+      toastErrorNotify(
+        "Login işlemi başarısız oldu. Lütfen bilgilerinizi kontrol edip yeniden deneyiniz."
+      );
     }
   };
 
@@ -50,8 +55,10 @@ const useApiRequests = () => {
       );
       dispatch(registerSuccess(data));
       navigate("/home");
+      toastSuccessNotify("Başarıyla kayıt olundu.");
     } catch (error) {
       console.log(error);
+      toastErrorNotify("Lütfen bilgilerinizi kontrol edip yeniden deneyiniz.");
     }
   };
 
@@ -63,6 +70,7 @@ const useApiRequests = () => {
       );
       dispatch(logoutSuccess(data));
       navigate("/");
+      toastSuccessNotify("Çıkış yaptınız.");
     } catch (error) {
       console.log(error);
     }
