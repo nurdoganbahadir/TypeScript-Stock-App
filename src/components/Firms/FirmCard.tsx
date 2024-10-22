@@ -24,12 +24,28 @@ interface FirmCardProps {
 
 const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
   return (
-    <Grid item xs={12} md={6} xl={3}>
+    <Grid item xs={6} md={4} xl={3}>
       <Card>
         <CardHeader
-          sx={{ height: "150px" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "start",
+            height: { xs: "100px", sm: "150px" },
+          }}
           title={firm.name}
           subheader={firm.address}
+          titleTypographyProps={{
+            sx: {
+              fontSize: { xs: "1rem", sm: "1.5rem" },
+              fontWeight: "bold",
+            },
+          }}
+          subheaderTypographyProps={{
+            sx: {
+              fontSize: { xs: "0.9rem", sm: "1.2rem" },
+            },
+          }}
         />
 
         <CardMedia
@@ -39,10 +55,16 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
           sx={{
             height: "150px",
             objectFit: "contain",
-            padding: "20px",
           }}
         />
-        <Typography sx={{ textAlign: "center" }}>{firm.phone}</Typography>
+        <Typography
+          sx={{
+            textAlign: "center",
+            textDecoration: "underline",
+          }}
+        >
+          {firm.phone}
+        </Typography>
         <CardActions
           disableSpacing
           sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}
