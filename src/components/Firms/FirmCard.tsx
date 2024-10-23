@@ -38,7 +38,7 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "start",
-            height: { xs: "100px", sm: "160px" },
+            height: { xs: "120px", sm: "160px" },
           }}
           title={firm.name}
           subheader={firm.address}
@@ -46,6 +46,7 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
             sx: {
               fontSize: { xs: "1rem", sm: "1.5rem" },
               fontWeight: "bold",
+              textTransform: "capitalize",
             },
           }}
           subheaderTypographyProps={{
@@ -61,7 +62,7 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
           image={firm.image}
           alt={firm.name}
           sx={{
-            height: "150px",
+            height: { xs: "100px", sm: "150px" },
             objectFit: "contain",
           }}
         />

@@ -35,14 +35,14 @@ const BrandCard: React.FC<BrandCardProps> = ({ brand, handleOpen }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "start",
-            height: { xs: "100px", sm: "160px" },
+            textAlign: "center",
           }}
           title={brand.name}
           titleTypographyProps={{
             sx: {
               fontSize: { xs: "1rem", sm: "1.5rem" },
               fontWeight: "bold",
+              textTransform: "capitalize",
             },
           }}
         />
@@ -54,6 +54,7 @@ const BrandCard: React.FC<BrandCardProps> = ({ brand, handleOpen }) => {
           sx={{
             height: "150px",
             objectFit: "contain",
+            py: "2rem",
           }}
         />
         <CardActions
