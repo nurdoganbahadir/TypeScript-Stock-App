@@ -5,7 +5,6 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import useStockRequests from "../../services/useStockRequests";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 
@@ -25,13 +24,19 @@ interface FirmCardProps {
 const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
   return (
     <Grid item xs={6} md={4} xl={3}>
-      <Card>
+      <Card
+        sx={{
+          borderStyle: "solid",
+          borderWidth: "2px",
+          borderColor: "#00695c",
+        }}
+      >
         <CardHeader
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "start",
-            height: { xs: "100px", sm: "150px" },
+            height: { xs: "100px", sm: "160px" },
           }}
           title={firm.name}
           subheader={firm.address}
@@ -67,13 +72,19 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
         </Typography>
         <CardActions
           disableSpacing
-          sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}
+          sx={{
+            height: "20px",
+            display: "flex",
+            justifyContent: "center",
+            gap: "1rem",
+            backgroundColor: "#00695c",
+          }}
         >
           <IconButton aria-label="delete">
-            <DeleteIcon />
+            <DeleteIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton aria-label="edit" onClick={() => handleOpen(firm)}>
-            <EditIcon />
+            <EditIcon sx={{ color: "white" }} />
           </IconButton>
         </CardActions>
       </Card>

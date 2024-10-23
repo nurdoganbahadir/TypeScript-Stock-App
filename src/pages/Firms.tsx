@@ -7,6 +7,7 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import Loading from "../components/Loading";
 import { NoDataMessage } from "../components/Messages";
 import FirmCard from "../components/Firms/FirmCard";
+import FirmModal from "../components/Firms/FirmModal";
 
 interface FirmInfo {
   _id: string | number;
@@ -49,10 +50,20 @@ const Firms = () => {
           }}
         >
           <Typography variant="h4">FIRMS</Typography>
-          <Button variant="contained">
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "#00695c" }}
+            onClick={() => handleOpen(null)}
+          >
             <AddCircleOutlineIcon />
           </Button>
         </Box>
+        <FirmModal
+          open={open}
+          handleClose={handleClose}
+          data={data}
+          setData={setData}
+        />
         {loading ? (
           <Loading />
         ) : firms.length > 0 ? (
