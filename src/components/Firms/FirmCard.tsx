@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
+import useStockRequests from "../../services/useStockRequests";
 
 interface FirmInfo {
   name: string;
@@ -22,6 +23,7 @@ interface FirmCardProps {
 }
 
 const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
+  const { deleteStock } = useStockRequests();
   return (
     <Grid item xs={6} md={4} xl={3}>
       <Card
@@ -80,7 +82,10 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
             backgroundColor: "#00695c",
           }}
         >
-          <IconButton aria-label="delete">
+          <IconButton
+            aria-label="delete"
+            onClick={() => deleteStock("firms", firm._id)}
+          >
             <DeleteIcon sx={{ color: "white" }} />
           </IconButton>
           <IconButton aria-label="edit" onClick={() => handleOpen(firm)}>

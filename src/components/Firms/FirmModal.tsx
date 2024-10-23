@@ -30,7 +30,7 @@ const FirmModal: React.FC<FirmModalProps> = ({
   data,
   setData,
 }) => {
-  //   const { postStock, updateStock } = useStockRequests();
+  const { postStock, updateStock } = useStockRequests();
 
   const firmSchema = object({
     name: string().required("Firma ismi zorunludur."),
@@ -68,14 +68,17 @@ const FirmModal: React.FC<FirmModalProps> = ({
       aria-describedby="modal-modal-description"
     >
       <Formik
-        initialValues={data || { name: "", phone: "", address: "", image: "" }}
+        initialValues={
+          data || { name: "", phone: "", address: "", image: ""}
+        }
         validationSchema={firmSchema}
         onSubmit={(values, actions) => {
-          //   if (data && data._id) {
-          //     updateStock("firms", values, data._id);
-          //   } else {
-          //     postStock("firms", values);
-          //   }
+          if (data && data._id) {
+            const updatedData = { ...values, _id: data._id }; // _id'yi values nesnesine ekleyin
+            updateStock("firms", updatedData);
+          } else {
+            postStock("firms", values);
+          }
           setData(null);
           actions.resetForm();
           actions.setSubmitting(false);
