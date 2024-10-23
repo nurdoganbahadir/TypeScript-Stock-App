@@ -22,7 +22,6 @@ const Brands = () => {
   const { brands, loading } = useSelector((state: RootState) => state.stock);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<BrandInfo | null>(null);
-  console.log(brands);
 
   const handleOpen: OpenModal = (brand = null) => {
     setData(brand);

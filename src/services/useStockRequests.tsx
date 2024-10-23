@@ -6,14 +6,20 @@ import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 // path parametresinin türünü belirli değerlerle kısıtlayabilirsiniz
 
 interface PageProps {
-  name: string;
+  _id?: string | number;
+  name?: string;
   phone?: string;
   address?: string;
-  image: string;
+  image?: string;
+  brandId?: string;
+  firmId?: string;
+  productId?: string;
+  quantity?: string;
+  price?: string;
 }
 interface StockProps {
   values: PageProps;
-  path: "firms" | "products" | "brands";
+  path: "firms" | "products" | "brands" | "purchases";
 }
 
 const useStockRequests = () => {
