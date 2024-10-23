@@ -14,8 +14,8 @@ interface StockState {
 
 const initialState: StockState = {
   firms: [{}],
-  products: [],
   brands: [],
+  products: [],
   loading: false,
   error: false,
 };

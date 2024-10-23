@@ -7,8 +7,8 @@ import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 interface PageProps {
   name: string;
-  phone: string;
-  address: string;
+  phone?: string;
+  address?: string;
   image: string;
 }
 interface StockProps {
