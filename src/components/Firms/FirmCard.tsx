@@ -51,6 +51,7 @@ const FirmCard: React.FC<FirmCardProps> = ({ firm, handleOpen }) => {
           subheaderTypographyProps={{
             sx: {
               fontSize: { xs: "0.9rem", sm: "1.2rem" },
+              textTransform: "capitalize",
             },
           }}
         />
