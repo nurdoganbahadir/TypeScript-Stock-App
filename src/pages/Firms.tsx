@@ -41,7 +41,7 @@ const Firms = () => {
 
   return (
     <>
-      <Container>
+      <Container sx={{ minHeight: "79.4vh" }}>
         <Box
           sx={{
             display: "flex",

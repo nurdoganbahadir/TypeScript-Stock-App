@@ -31,7 +31,7 @@ const stockSlice = createSlice({
     getStockSuccess: (state, action: PayloadAction<GetStockSuccessPayload>) => {
       const { path, data } = action.payload;
       state[path] = data; // Dinamik olarak path kullanarak durumu güncelle
-      state.loading = false;
+      state.loading = true;
     },
     fetchFail: (state) => {
       state.loading = false;

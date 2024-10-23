@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CardMedia, Typography } from "@mui/material";
 import LoadingGif from "../assets/loading.gif";
 
 const Loading = () => {
@@ -6,13 +6,19 @@ const Loading = () => {
     <Box
       sx={{
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
         height: "60vh",
       }}
     >
-      <img src={LoadingGif} style={{ width: "200px" }} />
+      <CardMedia
+        component="img"
+        src={LoadingGif}
+        sx={{ width: { xs: "200px", sm: "350px" } }}
+      />
+      <Typography sx={{ fontSize: "2rem" }}>Loading...</Typography>
     </Box>
   );
 };
