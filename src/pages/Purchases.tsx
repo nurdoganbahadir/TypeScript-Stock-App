@@ -11,9 +11,9 @@ import PurchaseTable from "../components/Purchases/PurchaseTable";
 // PurchaseData arayüzünü buraya ekleyin
 interface PurchaseData {
   _id: string;
-  brandId: string; // veya { name: string; } şeklinde olabilir
-  firmId: string; // veya { name: string; } şeklinde olabilir
-  productId: string; // veya { name: string; } şeklinde olabilir
+  brandId: { name: string }; // { name: string } şeklinde tanımlayın
+  firmId: { name: string }; // { name: string } şeklinde tanımlayın
+  productId: { name: string }; // { name: string } şeklinde tanımlayın
   quantity: string | number;
   price: string | number;
   createdAt?: string; // Eğer bu özellik kullanılacaksa ekleyin
@@ -23,14 +23,13 @@ interface PurchaseData {
 const Purchases = () => {
   const { getStock } = useStockRequests();
   const { loading, purchases } = useSelector((state: RootState) => state.stock);
-  console.log(purchases);
   const [open, setOpen] = useState(false);
-
+  console.log(purchases);
   const initialState: PurchaseData = {
     _id: "",
-    brandId: "",
-    firmId: "",
-    productId: "",
+    brandId: { name: "" }, // brandId nesne olarak tanımlandı
+    firmId: { name: "" }, // firmId nesne olarak tanımlandı
+    productId: { name: "" }, // productId nesne olarak tanımlandı
     quantity: "",
     price: "",
   };
@@ -45,9 +44,9 @@ const Purchases = () => {
 
   useEffect(() => {
     getStock("products");
-    getStock("purchases");
     getStock("brands");
     getStock("firms");
+    getStock("purchases");
   }, []);
 
   return (

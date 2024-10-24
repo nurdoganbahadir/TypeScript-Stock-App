@@ -14,13 +14,13 @@ import { Dispatch, SetStateAction } from "react";
 
 interface PurchaseDataTable {
   _id: string;
-  brandId: string; // veya { name: string; } şeklinde olabilir
-  firmId: string; // veya { name: string; } şeklinde olabilir
-  productId: string; // veya { name: string; } şeklinde olabilir
+  brandId: { name: string }; // string yerine obje
+  firmId: { name: string }; // string yerine obje
+  productId: { name: string }; // string yerine obje
   quantity: string | number;
   price: string | number;
-  createdAt?: string; // Eğer bu özellik kullanılacaksa ekleyin
-  amount?: string | number; // Eğer bu özellik kullanılacaksa ekleyin
+  createdAt?: string;
+  amount?: string | number;
 }
 
 interface PurchaseTableProps {
@@ -34,11 +34,77 @@ const PurchaseTable: React.FC<PurchaseTableProps> = ({
 }) => {
   const { purchases } = useSelector((state: RootState) => state.stock);
   const { deleteStock } = useStockRequests();
-
+  
   const getRowId = (row: PurchaseDataTable) => row._id;
 
   const columns: GridColDef<PurchaseDataTable>[] = [
-    // ... diğer kolon tanımlamaları
+    {
+      field: "createdAt",
+      headerName: "Date",
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+      renderCell: ({ row }: { row: PurchaseDataTable }) => {
+        return row.createdAt
+          ? new Date(row.createdAt).toLocaleString("de-DE")
+          : "N/A"; // Eğer createdAt undefined ise "N/A" döner
+      },
+    },
+    {
+      field: "firmId",
+      headerName: "Firm",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+      renderCell: ({ row }: { row: PurchaseDataTable }) => row?.firmId?.name,
+    },
+    {
+      field: "brandId",
+      headerName: "Brand",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+      renderCell: ({ row }: { row: PurchaseDataTable }) => row?.brandId?.name,
+    },
+    {
+      field: "productID",
+      headerName: "Product",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+      renderCell: ({ row }: { row: PurchaseDataTable }) => row?.productId?.name,
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+    },
     {
       field: "actions",
       headerName: "Actions",

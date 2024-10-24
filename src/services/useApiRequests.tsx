@@ -29,6 +29,7 @@ const useApiRequests = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useSelector((state: RootState) => state.auth);
+  console.log(token);
 
   const login: LoginFn = async (user) => {
     try {
