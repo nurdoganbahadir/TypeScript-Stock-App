@@ -12,9 +12,9 @@ import { RootState } from "../../app/store";
 
 interface PurchaseDataModal {
   _id: string;
-  brandId: { name: string }; // { name: string } şeklinde tanımlayın
-  firmId: { name: string }; // { name: string } şeklinde tanımlayın
-  productId: { name: string }; // { name: string } şeklinde tanımlayın
+  brandId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
+  firmId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
+  productId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
   quantity: string | number;
   price: string | number;
   createdAt?: string; // Eğer bu özellik kullanılacaksa ekleyin
@@ -72,7 +72,9 @@ const PurchaseModal: React.FC<PurchaseProps> = ({
     p: 4,
   };
 
-  const handleChange = (e: SelectChangeEvent<string>) => {
+  const handleChange = (
+    e: SelectChangeEvent<string> | React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
 
     // İlgili seçimin objesini bulmak için map yapıları kullanılıyor
@@ -80,13 +82,17 @@ const PurchaseModal: React.FC<PurchaseProps> = ({
       const selectedFirm = firms.find((firm: Firm) => firm._id === value);
       setData({
         ...data,
-        firmId: selectedFirm ? { name: selectedFirm.name } : data.firmId,
+        firmId: selectedFirm
+          ? { _id: selectedFirm._id, name: selectedFirm.name }
+          : data.firmId,
       });
     } else if (name === "brandId") {
       const selectedBrand = brands.find((brand: Brand) => brand._id === value);
       setData({
         ...data,
-        brandId: selectedBrand ? { name: selectedBrand.name } : data.brandId,
+        brandId: selectedBrand
+          ? { _id: selectedBrand._id, name: selectedBrand.name }
+          : data.brandId,
       });
     } else if (name === "productId") {
       const selectedProduct = products.find(
@@ -95,35 +101,40 @@ const PurchaseModal: React.FC<PurchaseProps> = ({
       setData({
         ...data,
         productId: selectedProduct
-          ? { name: selectedProduct.name }
+          ? { _id: selectedProduct._id, name: selectedProduct.name }
           : data.productId,
+      });
+    } else {
+      // TextField için durum
+      setData({
+        ...data,
+        [name]: value, // name'e göre veriyi güncelle
       });
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
 
-    // submitData oluştururken, brandId, firmId ve productId için sadece name değerlerini kullanın
-    const submitData = {
-      quantity: String(data.quantity), // Number'dan String'e dönüşüm
-      price: String(data.price), // Number'dan String'e dönüşüm
-      _id: data._id, // _id'yi olduğu gibi kullanın
-      brandId: data.brandId.name, // Sadece name değerini alın
-      firmId: data.firmId.name, // Sadece name değerini alın
-      productId: data.productId.name, // Sadece name değerini alın
-      createdAt: data.createdAt,
-      amount: data.amount,
-    };
-
-    if (data?._id) {
-      updateStock("purchases", submitData); // Güncelleme işlemi
-    } else {
-      postStock("purchases", submitData); // Ekleme işlemi
-    }
-
-    handleClose();
+  // submitData oluştururken, brandId, firmId ve productId için sadece _id değerlerini kullanın
+  const submitData: any = {
+    quantity: String(data.quantity), // Number'dan String'e dönüşüm
+    price: String(data.price), // Number'dan String'e dönüşüm
+    brandId: data.brandId?._id, // Sadece _id değerini alın
+    firmId: data.firmId?._id, // Sadece _id değerini alın
+    productId: data.productId?._id, // Sadece _id değerini alın
   };
+
+  // Eğer data._id varsa, güncelleme işlemi yap, yoksa ekleme işlemi yap
+  if (data?._id) {
+    submitData._id = data._id; // update işlemi için _id'yi ekle
+    updateStock("purchases", submitData); // Güncelleme işlemi
+  } else {
+    postStock("purchases", submitData); // Ekleme işlemi
+  }
+
+  handleClose();
+};
 
   return (
     <div>
@@ -133,7 +144,7 @@ const PurchaseModal: React.FC<PurchaseProps> = ({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={ modalStyle }>
+        <Box sx={modalStyle}>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component="form"

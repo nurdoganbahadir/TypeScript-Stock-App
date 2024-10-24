@@ -37,6 +37,7 @@ const useStockRequests = () => {
   };
   const postStock = async (path: StockProps["path"], values: PageProps) => {
     dispatch(fetchStart());
+    console.log(values);
     try {
       await axiosToken.post(path, values);
       getStock(path);

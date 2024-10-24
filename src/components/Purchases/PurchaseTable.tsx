@@ -14,9 +14,9 @@ import { Dispatch, SetStateAction } from "react";
 
 interface PurchaseDataTable {
   _id: string;
-  brandId: { name: string }; // string yerine obje
-  firmId: { name: string }; // string yerine obje
-  productId: { name: string }; // string yerine obje
+  brandId: { name: string; _id: string }; // string yerine obje
+  firmId: { name: string; _id: string }; // string yerine obje
+  productId: { name: string; _id: string }; // string yerine obje
   quantity: string | number;
   price: string | number;
   createdAt?: string;
@@ -34,7 +34,7 @@ const PurchaseTable: React.FC<PurchaseTableProps> = ({
 }) => {
   const { purchases } = useSelector((state: RootState) => state.stock);
   const { deleteStock } = useStockRequests();
-  
+
   const getRowId = (row: PurchaseDataTable) => row._id;
 
   const columns: GridColDef<PurchaseDataTable>[] = [

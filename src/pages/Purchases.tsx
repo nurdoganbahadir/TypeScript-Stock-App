@@ -11,9 +11,9 @@ import PurchaseTable from "../components/Purchases/PurchaseTable";
 // PurchaseData arayüzünü buraya ekleyin
 interface PurchaseData {
   _id: string;
-  brandId: { name: string }; // { name: string } şeklinde tanımlayın
-  firmId: { name: string }; // { name: string } şeklinde tanımlayın
-  productId: { name: string }; // { name: string } şeklinde tanımlayın
+  brandId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
+  firmId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
+  productId: { name: string; _id: string }; // { name: string } şeklinde tanımlayın
   quantity: string | number;
   price: string | number;
   createdAt?: string; // Eğer bu özellik kullanılacaksa ekleyin
@@ -27,9 +27,9 @@ const Purchases = () => {
   console.log(purchases);
   const initialState: PurchaseData = {
     _id: "",
-    brandId: { name: "" }, // brandId nesne olarak tanımlandı
-    firmId: { name: "" }, // firmId nesne olarak tanımlandı
-    productId: { name: "" }, // productId nesne olarak tanımlandı
+    brandId: { name: "", _id: "" }, // brandId nesne olarak tanımlandı
+    firmId: { name: "", _id: "" }, // firmId nesne olarak tanımlandı
+    productId: { name: "", _id: "" }, // productId nesne olarak tanımlandı
     quantity: "",
     price: "",
   };
