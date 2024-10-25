@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import useStockRequests from "../services/useStockRequests";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { NoDataMessage } from "../components/Messages";
 import { useSelector } from "react-redux";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { RootState } from "../app/store";
 import PurchaseModal from "../components/Purchases/PurchaseModal";
 import PurchaseTable from "../components/Purchases/PurchaseTable";
+import Loading from "../components/Loading";
 
 // PurchaseData arayüzünü buraya ekleyin
 interface PurchaseData {
@@ -51,26 +52,32 @@ const Purchases = () => {
 
   return (
     <>
-      <Box
-        sx={{ display: "flex", justifyContent: "space-between", my: "1.5rem" }}
-      >
-        <Typography variant="h4">PURCHASES</Typography>
-        <Button onClick={handleOpen} variant="contained" sx={{ mb: 2 }}>
-          <AddCircleOutlineIcon />
-        </Button>
-      </Box>
+      <Container sx={{ minHeight: "79.4vh" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            my: "1.5rem",
+          }}
+        >
+          <Typography variant="h4">PURCHASES</Typography>
+          <Button onClick={handleOpen} variant="contained" sx={{ mb: 2 }}>
+            <AddCircleOutlineIcon />
+          </Button>
+        </Box>
+        {loading && <Loading />}
+        {!loading && !purchases?.length && <NoDataMessage />}
+        {!loading && purchases?.length > 0 && (
+          <PurchaseTable setData={setData} handleOpen={handleOpen} />
+        )}
 
-      {!loading && !purchases?.length && <NoDataMessage />}
-      {!loading && purchases?.length > 0 && (
-        <PurchaseTable setData={setData} handleOpen={handleOpen} />
-      )}
-
-      <PurchaseModal
-        open={open}
-        handleClose={handleClose}
-        data={data}
-        setData={setData}
-      />
+        <PurchaseModal
+          open={open}
+          handleClose={handleClose}
+          data={data}
+          setData={setData}
+        />
+      </Container>
     </>
   );
 };
