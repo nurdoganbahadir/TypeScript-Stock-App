@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Path'lerin olabileceği belirli değerler
-type StockPath = "firms" | "products" | "brands" | "purchases" | "categories";
+type StockPath =
+  | "firms"
+  | "products"
+  | "brands"
+  | "purchases"
+  | "categories"
+  | "sales";
 
 interface GetStockSuccessPayload {
   path: StockPath; // Burada path türünü belirli değerlerle kısıtlıyoruz
@@ -16,6 +22,7 @@ const initialState: StockState = {
   firms: [{}],
   brands: [],
   products: [],
+  sales: [],
   categories: [],
   purchases: [],
   loading: false,

@@ -10,6 +10,7 @@ import Firms from "../pages/Firms";
 import Brands from "../pages/Brands";
 import Purchases from "../pages/Purchases";
 import Products from "../pages/Products";
+import Sales from "../pages/Sales";
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const AppRouter: React.FC = () => {
           <Route path="/brands" element={<Brands />} />
           <Route path="/purchases" element={<Purchases />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/sales" element={<Sales />} />
         </Route>
       </Routes>
       {!hideNavbarAndFooter && <Footer />}
