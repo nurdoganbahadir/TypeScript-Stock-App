@@ -4,7 +4,7 @@ StockApp is an online single page web application that enables you to manage ord
 
 # Live Link of the Project
 
-[Click Me]()
+[Click Me](https://typescript-stockapp-nurdoganbahadir.vercel.app/)
 
 # Libraries and Technologies I use
 
@@ -39,4 +39,4 @@ This will install the necessary dependencies. After that, you can run:
 
 # How does my project look
 
-![Redux Toolkit]()
+![Redux Toolkit](./stock-app.gif)
