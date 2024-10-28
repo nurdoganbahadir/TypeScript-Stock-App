@@ -19,7 +19,7 @@ interface PageProps {
 }
 interface StockProps {
   values: PageProps;
-  path: "firms" | "products" | "brands" | "purchases";
+  path: "firms" | "products" | "brands" | "purchases" | "categories";
 }
 
 const useStockRequests = () => {

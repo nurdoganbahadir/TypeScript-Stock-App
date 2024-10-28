@@ -23,9 +23,11 @@ interface PurchaseData {
 
 const Purchases = () => {
   const { getStock } = useStockRequests();
-  const { loading, purchases } = useSelector((state: RootState) => state.stock);
+  const { loading, purchases } = useSelector(
+    (state: RootState) => state.stock
+  );
   const [open, setOpen] = useState(false);
-  console.log(purchases);
+
   const initialState: PurchaseData = {
     _id: "",
     brandId: { name: "", _id: "" }, // brandId nesne olarak tanımlandı

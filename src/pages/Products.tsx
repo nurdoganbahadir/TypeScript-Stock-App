@@ -5,33 +5,30 @@ import { NoDataMessage } from "../components/Messages";
 import { useSelector } from "react-redux";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { RootState } from "../app/store";
-import PurchaseModal from "../components/Purchases/PurchaseModal";
-import PurchaseTable from "../components/Purchases/PurchaseTable";
 import Loading from "../components/Loading";
+import ProductTable from "../components/Products/ProductTable";
+import ProductModal from "../components/Products/ProductModal";
 
 interface ProductsData {
   _id: string;
-  brandId: { name: string; _id: string }; 
-  firmId: { name: string; _id: string }; 
-  productId: { name: string; _id: string }; 
-  quantity: string | number;
-  price: string | number;
-  createdAt?: string; 
-  amount?: string | number; 
+  brandId: { name: string; _id: string };
+  categoryId: { name: string; _id: string };
+  quantity?: string;
+  name: string;
 }
 
 const Products = () => {
   const { getStock } = useStockRequests();
-  const { loading, purchases } = useSelector((state: RootState) => state.stock);
+  const { loading, products } = useSelector((state: RootState) => state.stock);
   const [open, setOpen] = useState(false);
-  console.log(purchases);
+
+
   const initialState: ProductsData = {
     _id: "",
     brandId: { name: "", _id: "" }, // brandId nesne olarak tanımlandı
-    firmId: { name: "", _id: "" }, // firmId nesne olarak tanımlandı
-    productId: { name: "", _id: "" }, // productId nesne olarak tanımlandı
+    categoryId: { name: "", _id: "" },
     quantity: "",
-    price: "",
+    name: "",
   };
 
   const [data, setData] = useState<ProductsData>(initialState);
@@ -45,8 +42,7 @@ const Products = () => {
   useEffect(() => {
     getStock("products");
     getStock("brands");
-    getStock("firms");
-    getStock("purchases");
+    getStock("categories");
   }, []);
 
   return (
@@ -65,12 +61,12 @@ const Products = () => {
           </Button>
         </Box>
         {loading && <Loading />}
-        {!loading && !purchases?.length && <NoDataMessage />}
-        {!loading && purchases?.length > 0 && (
-          <PurchaseTable setData={setData} handleOpen={handleOpen} />
+        {!loading && !products?.length && <NoDataMessage />}
+        {!loading && products?.length > 0 && (
+          <ProductTable setData={setData} handleOpen={handleOpen} />
         )}
 
-        <PurchaseModal
+        <ProductModal
           open={open}
           handleClose={handleClose}
           data={data}

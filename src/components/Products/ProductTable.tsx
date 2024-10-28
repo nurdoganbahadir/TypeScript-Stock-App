@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import useStockRequests from "../../services/useStockRequests";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import {
   DataGrid,
   GridActionsCellItem,
@@ -14,13 +13,10 @@ import { Dispatch, SetStateAction } from "react";
 
 interface ProductDataTable {
   _id: string;
-  brandId: { name: string; _id: string }; // string yerine obje
-  firmId: { name: string; _id: string }; // string yerine obje
-  productId: { name: string; _id: string }; // string yerine obje
-  quantity: string | number;
-  price: string | number;
-  createdAt?: string;
-  amount?: string | number;
+  brandId: { name: string; _id: string };
+  categoryId: { name: string; _id: string };
+  quantity?: string;
+  name: string;
 }
 
 interface ProductTableProps {
@@ -28,38 +24,32 @@ interface ProductTableProps {
   handleOpen: () => void;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({
-  setData,
-  handleOpen,
-}) => {
-  const { purchases } = useSelector((state: RootState) => state.stock);
+const ProductTable: React.FC<ProductTableProps> = ({ setData, handleOpen }) => {
+  const { products } = useSelector((state: RootState) => state.stock);
   const { deleteStock } = useStockRequests();
 
   const getRowId = (row: ProductDataTable) => row._id;
 
   const columns: GridColDef<ProductDataTable>[] = [
     {
-      field: "createdAt",
-      headerName: "Date",
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-      cellClassName: "custom-cell",
-      renderCell: ({ row }: { row: ProductDataTable }) => {
-        return row.createdAt
-          ? new Date(row.createdAt).toLocaleString("de-DE")
-          : "N/A"; // Eğer createdAt undefined ise "N/A" döner
-      },
-    },
-    {
-      field: "firmId",
-      headerName: "Firm",
+      field: "_Id",
+      headerName: "#",
       flex: 1,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
       cellClassName: "custom-cell",
-      renderCell: ({ row }: { row: ProductDataTable }) => row?.firmId?.name,
+      renderCell: ({ row }: { row: ProductDataTable }) => row?._id,
+    },
+    {
+      field: "categoryId",
+      headerName: "Category",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      headerClassName: "custom-header",
+      cellClassName: "custom-cell",
+      renderCell: ({ row }: { row: ProductDataTable }) => row?.categoryId?.name,
     },
     {
       field: "brandId",
@@ -72,34 +62,18 @@ const ProductTable: React.FC<ProductTableProps> = ({
       renderCell: ({ row }: { row: ProductDataTable }) => row?.brandId?.name,
     },
     {
-      field: "productID",
-      headerName: "Product",
+      field: "name",
+      headerName: "Name",
       flex: 1,
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
       cellClassName: "custom-cell",
-      renderCell: ({ row }: { row: ProductDataTable }) => row?.productId?.name,
+      renderCell: ({ row }: { row: ProductDataTable }) => row?.name,
     },
     {
       field: "quantity",
       headerName: "Quantity",
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-      cellClassName: "custom-cell",
-    },
-    {
-      field: "price",
-      headerName: "Price",
-      headerAlign: "center",
-      align: "center",
-      headerClassName: "custom-header",
-      cellClassName: "custom-cell",
-    },
-    {
-      field: "amount",
-      headerName: "Amount",
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",
@@ -112,33 +86,13 @@ const ProductTable: React.FC<ProductTableProps> = ({
       align: "center",
       headerClassName: "custom-header",
       cellClassName: "custom-cell",
-      renderCell: ({
-        row: { _id, brandId, productId, quantity, price, firmId },
-      }) => {
+      renderCell: ({ row: { _id } }) => {
         return [
-          <GridActionsCellItem
-            key={"edit"}
-            icon={<EditIcon />}
-            label="Edit"
-            onClick={() => {
-              handleOpen();
-              setData({
-                _id,
-                brandId,
-                productId,
-                quantity: Number(quantity), // Dönüştürme işlemi
-                price: Number(price), // Dönüştürme işlemi
-                firmId,
-                createdAt: new Date().toISOString(),
-                amount: Number(quantity) * Number(price), // Dönüştürülmüş değerler ile hesaplama
-              });
-            }}
-          />,
           <GridActionsCellItem
             key={"delete"}
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => deleteStock("purchases", _id)}
+            onClick={() => deleteStock("products", _id)}
           />,
         ];
       },
@@ -148,7 +102,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
   return (
     <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
       <DataGrid
-        rows={purchases}
+        rows={products}
         columns={columns}
         disableRowSelectionOnClick
         slots={{ toolbar: GridToolbar }}
