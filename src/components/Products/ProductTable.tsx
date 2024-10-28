@@ -73,7 +73,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ setData, handleOpen }) => {
     },
     {
       field: "quantity",
-      headerName: "Quantity",
+      headerName: "Stock",
       headerAlign: "center",
       align: "center",
       headerClassName: "custom-header",

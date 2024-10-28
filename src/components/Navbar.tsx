@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import useApiRequests from "../services/useApiRequests";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const pages = [
   { name: "Home", path: "/home" },
@@ -23,11 +25,14 @@ const pages = [
   { name: "Products", path: "/products" },
 ];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Logout"];
 
 function Navbar() {
   const { logout } = useApiRequests();
   const navigate = useNavigate();
+  const { username } = useSelector((state: RootState) => state.auth);
+
+  const navAvatar = username[0].toUpperCase();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -91,7 +96,7 @@ function Navbar() {
                   key={name}
                   onClick={() => {
                     handleCloseNavMenu();
-                    navigate(path); // Tıkladığınızda uygun yola yönlendirin
+                    navigate(path);
                   }}
                 >
                   <Typography sx={{ textAlign: "center" }}>{name}</Typography>
@@ -106,7 +111,7 @@ function Navbar() {
                 key={name}
                 onClick={() => {
                   handleCloseNavMenu();
-                  navigate(path); // Tıkladığınızda uygun yola yönlendirin
+                  navigate(path);
                 }}
                 sx={{
                   my: 2,
@@ -122,7 +127,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp">{navAvatar}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
