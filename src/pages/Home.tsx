@@ -1,9 +1,23 @@
-import React from 'react'
+import { useEffect } from "react";
+import useStockRequests from "../services/useStockRequests";
+import KPICards from "../components/Home/KPICards";
+import Charts from "../components/Home/Charts";
+import { Container } from "@mui/material";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  const { getStock } = useStockRequests();
 
-export default Home
+  useEffect(() => {
+    getStock("purchases");
+    getStock("sales");
+  }, []);
+
+  return (
+    <Container sx={{my:"2rem",minHeight:"78.6vh"}}>
+      <KPICards />
+      <Charts />
+    </Container>
+  );
+};
+
+export default Home;
