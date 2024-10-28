@@ -8,6 +8,8 @@ StockApp is an online single page web application that enables you to manage ord
 
 # Libraries and Technologies I use
 
+- TypeScript
+- React
 - Redux Toolkit
 - Material UI
 - Tailwind CSS
